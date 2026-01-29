@@ -18,19 +18,22 @@ concurrency:
 
 jobs:
   # Build job
-  build:
+build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive  # IMPORTANT: This pulls the PaperMod theme code
+
+      - name: Download Theme to CI Runner
+        run: |
+          git clone --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+          rm -rf themes/PaperMod/.git # Optional: remove git history of the theme to save space
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
-          extended: true  # Required for PaperMod
+          extended: true
 
       - name: Build
         run: hugo --minify
