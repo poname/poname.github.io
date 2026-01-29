@@ -1,0 +1,35 @@
+baseURL: "https://yourusername.github.io/"
+title: "Your Name"
+theme: "PaperMod"
+
+# This hides the "Made with Hugo" text for a cleaner look
+params:
+  footer:
+    poweredby: false 
+  defaultTheme: dark  # Professionals usually prefer Dark Mode by default
+  ShowReadingTime: true
+  
+  # PROFILE MODE: This creates the "Landing Page" look
+  profileMode:
+    enabled: true
+    title: "Your Name"
+    subtitle: "Data Scientist | NLP Engineer | Builder"
+    imageUrl: "https://github.com/yourusername.png" # Uses your GitHub pic
+    buttons:
+      - name: CV
+        url: "/cv"
+      - name: Blog
+        url: "/posts"
+      - name: GitHub
+        url: "https://github.com/yourusername"
+
+menu:
+  main:
+    - identifier: cv
+      name: CV
+      url: /cv/
+      weight: 10
+    - identifier: blog
+      name: Blog
+      url: /posts/
+      weight: 20
