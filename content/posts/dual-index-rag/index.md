@@ -5,10 +5,6 @@ draft: false
 tags: ["RAG", "LLM", "Information Retrieval", "NLP"]
 categories: ["Technical"]
 summary: "Maintaining two parallel search indices over the same corpus — small chunks for list extraction, large chunks for scalar extraction — with the budget math and implementation for constrained context windows."
-cover:
-    image: "architecture.png"
-    alt: "Dual-Index RAG Architecture"
-    relative: true
 ---
 
 *Prerequisites: This post assumes familiarity with RAG (Retrieval-Augmented Generation) — chunking, embeddings, vector search, and feeding retrieved passages to an LLM. If you're new to RAG, start with [Pinecone's RAG guide](https://www.pinecone.io/learn/retrieval-augmented-generation/) or [LangChain's RAG tutorial](https://python.langchain.com/docs/tutorials/rag/).*
