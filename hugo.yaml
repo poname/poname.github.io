@@ -1,5 +1,5 @@
 baseURL: "https://poname.github.io/"
-title: "dan"
+title: "Dan"
 theme: "PaperMod"
 
 params:
@@ -8,8 +8,8 @@ params:
   ShowPoweredBy: false
 
   homeInfoParams:
-    Title: "dan"
-    Content: "Things I learn and try."
+    Title: "Build Log"
+    Content: "What worked, what didn't, and why."
 
 menu:
   main:
