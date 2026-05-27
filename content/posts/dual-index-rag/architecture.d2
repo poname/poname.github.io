@@ -1,0 +1,76 @@
+direction: down
+
+title: {
+  label: Dual-Index RAG Architecture
+  near: top-center
+  shape: text
+  style.font-size: 20
+  style.bold: true
+}
+
+docs: "Movie / TV Corpus\nreviews, synopses, trivia, interviews" {
+  shape: cylinder
+  style.fill: "#e8f4f8"
+  style.stroke: "#2b6cb0"
+}
+
+docs -> chunker: Ingest once
+
+chunker: Chunking Layer {
+  style.fill: "#fefce8"
+  style.stroke: "#ca8a04"
+
+  small: "Small Chunks\n500 chars | 75 char overlap" {
+    shape: hexagon
+    style.fill: "#fef3c7"
+  }
+  large: "Large Chunks\n2,000 chars | 300 char overlap" {
+    shape: hexagon
+    style.fill: "#fef3c7"
+  }
+}
+
+small_idx: "Small-Chunk Index\n~3x chunk count\nVector + BM25" {
+  shape: stored_data
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+}
+
+large_idx: "Large-Chunk Index\nFewer chunks\nVector + BM25" {
+  shape: stored_data
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+}
+
+chunker.small -> small_idx
+chunker.large -> large_idx
+
+router: "Schema Router\nlist → small | scalar → large" {
+  shape: diamond
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+}
+
+small_idx -> router: "top-K = 30\nfilming_locations, cast" {
+  style.stroke: "#16a34a"
+}
+large_idx -> router: "top-K = 8\ncritical_reception, plot" {
+  style.stroke: "#2563eb"
+}
+
+query: "Query\n(one field at a time)" {
+  shape: parallelogram
+  style.fill: "#fff1f2"
+  style.stroke: "#e11d48"
+}
+
+query -> router
+
+llm: "LLM\n(8k context window)" {
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 16
+}
+
+router -> llm: "Prompt + Chunks + Output\nfits in 8,192 tokens"

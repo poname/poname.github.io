@@ -1,0 +1,34 @@
+direction: right
+
+title: {
+  label: "Scalar Fields — 8,192 token budget"
+  near: top-center
+  shape: text
+  style.font-size: 20
+  style.bold: true
+}
+
+prompt: "Prompt\n~700 tok (9%)" {
+  shape: rectangle
+  style.fill: "#bfdbfe"
+  style.stroke: "#2563eb"
+  style.font-size: 13
+}
+
+chunks: "8 large chunks\n8 x ~520 = ~4,160 tok (51%)" {
+  shape: rectangle
+  style.fill: "#60a5fa"
+  style.stroke: "#2563eb"
+  style.font-size: 13
+  style.bold: true
+}
+
+output: "Output\n~3,300 tok (40%)" {
+  shape: rectangle
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 13
+}
+
+prompt -> chunks {style.stroke: "#2563eb"}
+chunks -> output {style.stroke: "#2563eb"}
