@@ -1,24 +1,19 @@
 baseURL: "https://poname.github.io/"
-title: "Your Name"
+title: "dan"
 theme: "PaperMod"
 
-# This hides the "Made with Hugo" text for a cleaner look
 params:
-  footer:
-    poweredby: false 
-  defaultTheme: light
+  defaultTheme: dark
   ShowReadingTime: true
+  ShowPoweredBy: false
+
   homeInfoParams:
-    Title: "Your Name"
-    Content: "Data Scientist | NLP Engineer | Builder"
+    Title: "dan"
+    Content: "Things I learn and try."
 
 menu:
   main:
-    - identifier: cv
-      name: CV
-      url: /cv/
-      weight: 10
     - identifier: blog
       name: Blog
       url: /posts/
-      weight: 20
+      weight: 10
