@@ -9,7 +9,7 @@ summary: "Maintaining two parallel search indices over the same corpus — small
 
 *Prerequisites: This post assumes familiarity with RAG (Retrieval-Augmented Generation) — chunking, embeddings, vector search, and feeding retrieved passages to an LLM. If you're new to RAG, start with [Pinecone's RAG guide](https://www.pinecone.io/learn/retrieval-augmented-generation/) or [LangChain's RAG tutorial](https://python.langchain.com/docs/tutorials/rag/).*
 
-Most RAG tutorials hand you a single number for chunk size — 512 tokens, 1,000 characters [[2]](#references)[[6]](#references) — and call it a day. That works fine when every query has the same shape. But in production pipelines that extract structured data from unstructured documents, queries come in two fundamentally different flavours, and a single chunking strategy quietly underserves one of them.
+Most RAG tutorials hand you a single number for chunk size — 512 tokens, 1,000 characters [[2]](#ref-2)[[6]](#ref-6) — and call it a day. That works fine when every query has the same shape. But in production pipelines that extract structured data from unstructured documents, queries come in two fundamentally different flavours, and a single chunking strategy quietly underserves one of them.
 
 This post walks through **dual-index RAG** — maintaining two parallel search indices over the same corpus, each chunked for a different retrieval profile — with the budget math and implementation code for constrained context windows.
 
@@ -47,6 +47,7 @@ A 2,000-character chunk bundles 3-4 filming locations together. With top-K=8, af
 No single chunk size optimises for both.
 
 ![Single Index vs Dual Index Retrieval](comparison.png)
+*Figure 1: With a single index, list queries miss items bundled inside large chunks. Dual-index routing gives each query type the right granularity.*
 
 The idea of using multiple chunk granularities in RAG isn't new — it shows up as **multi-granularity retrieval** in academic literature, **parent-child chunking** in LlamaIndex, and **small-to-big retrieval** in LangChain. But those approaches use one index and expand chunks at read time. The approach here is different: two separate indices, deterministic routing, no expansion step.
 
@@ -55,6 +56,7 @@ The idea of using multiple chunk granularities in RAG isn't new — it shows up 
 Build two search indices from the same corpus:
 
 ![Dual-Index RAG Architecture](architecture.png)
+*Figure 2: Documents are chunked twice. The schema router sends each query to the index that matches its retrieval profile.*
 
 Both indices use the same hybrid search stack (dense vectors + BM25 with reciprocal rank fusion). The only difference is chunk granularity. Routing is deterministic — if the extraction target is defined in a schema, the field type tells you which index to query. `filming_locations: list[str]` goes to the small-chunk index. `critical_reception: str` goes to the large-chunk index. No classifier, no LLM call — it's a schema lookup.
 
@@ -158,8 +160,10 @@ The entire routing decision is three lines: check if `type == "array"`, pick the
 The examples below use an **8,192-token window** — a realistic ceiling for 7B–9B parameter models running locally on consumer hardware (16GB RAM, no dedicated GPU). The approach scales to larger windows; the ratio between chunk budget and output headroom stays the same.
 
 ![List Field Budget](budget_list.png)
+*Figure 3: List field path — 30 small chunks consume 53% of the budget, leaving room for output.*
 
 ![Scalar Field Budget](budget_scalar.png)
+*Figure 4: Scalar field path — 8 large chunks use a similar share, but each chunk carries full paragraph context.*
 
 Both paths use the full budget but allocate it differently — breadth vs depth — without exceeding the window.
 
@@ -169,7 +173,7 @@ One subtlety: metadata overhead. Each chunk sent to the LLM includes a source he
 
 ## Overlap: 15% Is the Sweet Spot
 
-Based on NVIDIA's 2024 chunking benchmark [[1]](#references), 15% overlap outperformed both 10% and 20% across five datasets:
+Based on NVIDIA's 2024 chunking benchmark [[1]](#ref-1), 15% overlap outperformed both 10% and 20% across five datasets:
 
 - **0–10%**: boundary sentences are lost, retrieval quality drops
 - **15%**: roughly one sentence of carryover — enough to preserve context
@@ -214,7 +218,7 @@ Scalar extraction quality held steady — the larger chunks preserved context wi
 
 I considered adding a 1,000-char index and decided against it. The retrieval improvement from 1 → 2 indices comes from matching fundamentally different retrieval objectives (breadth vs depth). A third index doesn't serve a distinct objective — it's a compromise that doesn't do either job as well.
 
-Chroma [[4]](#references) and NVIDIA's [[1]](#references) evaluations confirm that retrieval quality is more sensitive to the *strategy* (semantic vs fixed-size vs recursive) than to fine-tuning chunk size within a range. Once you're in the right ballpark (400-600 for precision [[5]](#references), 1,500-2,500 for context), the exact number matters less than having the right ballpark for the right query type.
+Chroma [[4]](#ref-4) and NVIDIA's [[1]](#ref-1) evaluations confirm that retrieval quality is more sensitive to the *strategy* (semantic vs fixed-size vs recursive) than to fine-tuning chunk size within a range. Once you're in the right ballpark (400-600 for precision [[5]](#ref-5), 1,500-2,500 for context), the exact number matters less than having the right ballpark for the right query type.
 
 ## When This Doesn't Apply
 
@@ -229,19 +233,19 @@ Dual-index RAG solves the breadth-vs-depth problem with fixed chunk sizes, but i
 
 If you're looking to go deeper:
 - [Greg Kamradt's notebook on semantic chunking](https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/tutorials/LevelsOfTextSplitting/5_Levels_Of_Text_Splitting.ipynb) walks through five levels of chunking sophistication, from naive splitting to semantic.
-- Unstructured's guide to chunking strategies [[3]](#references) covers adaptive chunking that adjusts parameters based on document content.
+- Unstructured's guide to chunking strategies [[3]](#ref-3) covers adaptive chunking that adjusts parameters based on document content.
 - LlamaIndex and LangChain both offer semantic chunking implementations that can be combined with the dual-index routing approach described here.
 
 ## References
 
-1. **NVIDIA (2024)** — [Finding the Best Chunking Strategy for Accurate AI Responses](https://developer.nvidia.com/blog/finding-the-best-chunking-strategy-for-accurate-ai-responses/). Benchmarked 7 chunking strategies across 5 datasets; 15% overlap outperformed 10% and 20%.
+<span id="ref-1">**[1]**</span> **NVIDIA (2024)** — [Finding the Best Chunking Strategy for Accurate AI Responses](https://developer.nvidia.com/blog/finding-the-best-chunking-strategy-for-accurate-ai-responses/). Benchmarked 7 chunking strategies across 5 datasets; 15% overlap outperformed 10% and 20%.
 
-2. **Weaviate** — [Chunking Strategies for RAG](https://weaviate.io/blog/chunking-strategies-for-rag). Practical overview of fixed-size, recursive, and semantic chunking with trade-off analysis.
+<span id="ref-2">**[2]**</span> **Weaviate** — [Chunking Strategies for RAG](https://weaviate.io/blog/chunking-strategies-for-rag). Practical overview of fixed-size, recursive, and semantic chunking with trade-off analysis.
 
-3. **Unstructured** — [Chunking for RAG: Best Practices](https://unstructured.io/blog/chunking-for-rag-best-practices). Recommends 256-1,024 token chunks, 10-20% overlap, with adaptive sizing based on document structure.
+<span id="ref-3">**[3]**</span> **Unstructured** — [Chunking for RAG: Best Practices](https://unstructured.io/blog/chunking-for-rag-best-practices). Recommends 256-1,024 token chunks, 10-20% overlap, with adaptive sizing based on document structure.
 
-4. **Chroma Research** — [Evaluating Chunking Strategies for Retrieval](https://research.trychroma.com/evaluating-chunking). RecursiveCharacterTextSplitter at 400 tokens achieved 88-89% recall; semantic chunkers reached 91%+.
+<span id="ref-4">**[4]**</span> **Chroma Research** — [Evaluating Chunking Strategies for Retrieval](https://research.trychroma.com/evaluating-chunking). RecursiveCharacterTextSplitter at 400 tokens achieved 88-89% recall; semantic chunkers reached 91%+.
 
-5. **Milvus / Zilliz** — [What is the Optimal Chunk Size for RAG Applications?](https://milvus.io/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications). 256-512 tokens for factoid queries, 1024+ for analytical queries.
+<span id="ref-5">**[5]**</span> **Milvus / Zilliz** — [What is the Optimal Chunk Size for RAG Applications?](https://milvus.io/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications). 256-512 tokens for factoid queries, 1024+ for analytical queries.
 
-6. **Pinecone** — [Chunking Strategies for LLM Applications](https://www.pinecone.io/learn/chunking-strategies/). Covers fixed-size, sentence-based, and recursive splitting with embedding-aware considerations.
+<span id="ref-6">**[6]**</span> **Pinecone** — [Chunking Strategies for LLM Applications](https://www.pinecone.io/learn/chunking-strategies/). Covers fixed-size, sentence-based, and recursive splitting with embedding-aware considerations.
