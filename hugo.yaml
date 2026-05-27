@@ -6,22 +6,11 @@ theme: "PaperMod"
 params:
   footer:
     poweredby: false 
-  defaultTheme: dark  # Professionals usually prefer Dark Mode by default
+  defaultTheme: light
   ShowReadingTime: true
-  
-  # PROFILE MODE: This creates the "Landing Page" look
-  profileMode:
-    enabled: true
-    title: "Your Name"
-    subtitle: "Data Scientist | NLP Engineer | Builder"
-    imageUrl: "https://github.com/yourusername.png" # Uses your GitHub pic
-    buttons:
-      - name: CV
-        url: "/cv"
-      - name: Blog
-        url: "/posts"
-      - name: GitHub
-        url: "https://github.com/yourusername"
+  homeInfoParams:
+    Title: "Your Name"
+    Content: "Data Scientist | NLP Engineer | Builder"
 
 menu:
   main:
