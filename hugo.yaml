@@ -2,6 +2,11 @@ baseURL: "https://poname.github.io/"
 title: "Dan's Blog"
 theme: "PaperMod"
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 params:
   defaultTheme: dark
   ShowReadingTime: true
