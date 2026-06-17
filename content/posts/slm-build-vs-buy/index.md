@@ -1,6 +1,6 @@
 ---
 title: "Build vs Buy: When a $1 Fine-Tune Beats the Frontier"
-date: 2026-06-22
+date: 2026-06-16
 draft: false
 tags: ["LLM", "SLM", "Fine-Tuning", "vLLM", "Cost Modeling", "Banking77", "Build vs Buy"]
 categories: ["Technical"]

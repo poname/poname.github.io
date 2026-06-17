@@ -1,6 +1,6 @@
 ---
 title: "Agentic Coding: Why the Smaller Gemma Won the Loop"
-date: 2026-06-19
+date: 2026-06-13
 draft: false
 tags: ["LLM", "SLM", "Agents", "LangGraph", "Tool Use", "Ollama", "Evaluation"]
 categories: ["Technical"]
@@ -55,7 +55,7 @@ The benchmark target is a small Python project (`sample_project/`) with a calcul
 
 Each task has a scripted verifier that runs after the agent stops: does the file diff contain the expected change? Do the tests pass? Was the right function created? Pass/fail is binary, not partial-credit.
 
-Hardware: M4 Max laptop, 36 GB RAM, Ollama. Temperature 0. Step cap at 25. Wall-clock cap at 300 seconds (a model still running at 300s gets timed out and the verifier runs on whatever state exists).
+Hardware: Apple Silicon laptop, 36 GB unified memory, Ollama. Temperature 0. Step cap at 25. Wall-clock cap at 300 seconds (a model still running at 300s gets timed out and the verifier runs on whatever state exists).
 
 ### A sidebar on the harness
 

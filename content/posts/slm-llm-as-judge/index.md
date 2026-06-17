@@ -1,6 +1,6 @@
 ---
 title: "LLM-as-Judge: We Asked Two AIs to Judge a Third"
-date: 2026-06-21
+date: 2026-06-15
 draft: false
 tags: ["LLM", "Evaluation", "LLM-as-Judge", "SLM", "Methodology"]
 categories: ["Technical"]

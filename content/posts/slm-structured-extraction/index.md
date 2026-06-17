@@ -1,6 +1,6 @@
 ---
 title: "Structured Extraction is Where Small Models Catch Up"
-date: 2026-06-16
+date: 2026-06-10
 draft: false
 tags: ["LLM", "SLM", "Structured Output", "JSON", "Ollama", "Evaluation"]
 categories: ["Technical"]
@@ -63,7 +63,7 @@ I picked nine models to cover the range I'd actually consider:
 | `llama3.1:8b` | 8B dense | Local · Ollama | $0 |
 | `qwen3.6:27b` | 27B dense, thinking model [[3]](#ref-3) | Local · Ollama | $0 |
 
-Hardware for the locals: M4 Max laptop, 36 GB RAM. Nothing exotic — anyone reading this post can reproduce the local half of the run for the price of a `brew install ollama`.
+Hardware for the locals: Apple Silicon laptop, 36 GB unified memory. Nothing exotic — anyone reading this post can reproduce the local half of the run for the price of a `brew install ollama`.
 
 Two things worth flagging about the model set before the results:
 

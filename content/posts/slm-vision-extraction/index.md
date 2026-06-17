@@ -1,6 +1,6 @@
 ---
 title: "Vision Extraction: The Local Gap Stays Small"
-date: 2026-06-17
+date: 2026-06-11
 draft: false
 tags: ["LLM", "SLM", "Multimodal", "Vision", "Ollama", "OCR", "Evaluation"]
 categories: ["Technical"]
@@ -54,9 +54,9 @@ Picking vision-capable models is more constrained than picking text models — f
 | `gemma4` (E4B) | Native multimodal [[2]](#ref-2) | Local · Ollama |
 | `gemma4:26b` | Native multimodal | Local · Ollama |
 
-Gemma 4 ships its vision encoder integrated into the same checkpoint as the text model; you don't load a separate vision adapter. That's worth flagging because it means the local memory footprint of "Gemma 4 with vision" is the same as "Gemma 4 with text" — about 5GB for E4B in 4-bit on the M4 Max.
+Gemma 4 ships its vision encoder integrated into the same checkpoint as the text model; you don't load a separate vision adapter. That's worth flagging because it means the local memory footprint of "Gemma 4 with vision" is the same as "Gemma 4 with text" — about 5GB for E4B in 4-bit on Apple Silicon.
 
-I considered adding Llama 3.2 Vision (11B), Qwen3-VL, and `gpt-oss:20b`, but each had a friction point — Llama 3.2 Vision wasn't installed cleanly on this hardware, Qwen-VL isn't yet in Ollama at the time of writing, and `gpt-oss` is text-only. The four-model lineup is the realistic apples-to-apples set on a current M4 Max laptop.
+I considered adding Llama 3.2 Vision (11B), Qwen3-VL, and `gpt-oss:20b`, but each had a friction point — Llama 3.2 Vision wasn't installed cleanly on this hardware, Qwen-VL isn't yet in Ollama at the time of writing, and `gpt-oss` is text-only. The four-model lineup is the realistic apples-to-apples set on a current Apple Silicon laptop (36 GB unified memory).
 
 ## Headline result
 
@@ -92,7 +92,7 @@ The most interesting finding from this run isn't about cloud-vs-local. It's abou
 
 This is the same pattern that showed up in the text-extraction post: at n=10 the 26B Gemma lost 1 to invalid JSON; at n=30 it lost 1 more. On vision the failure rate is 17%, an order of magnitude worse than its smaller sibling. Each failed receipt scores 0 across all five fields, which is why the 26B's per-receipt score variance is **three times higher** than any other model in the run.
 
-I have a working theory but not a clean confirmation. The 26B Gemma is a denser model than E4B (no MoE routing), so on the M4 Max it sits much closer to the memory and compute ceiling. Generation pressure under that ceiling — especially for the longer, more complex receipts — pushes it into a state where it starts emitting markdown wrappers around its JSON, or truncates mid-array, or hallucinates extra keys. None of which break a cloud-served model the same way, because the cloud-served model isn't running on a laptop.
+I have a working theory but not a clean confirmation. The 26B Gemma is a denser model than E4B (no MoE routing), so on Apple Silicon it sits much closer to the memory and compute ceiling. Generation pressure under that ceiling — especially for the longer, more complex receipts — pushes it into a state where it starts emitting markdown wrappers around its JSON, or truncates mid-array, or hallucinates extra keys. None of which break a cloud-served model the same way, because the cloud-served model isn't running on a laptop.
 
 The practical implication is simple: **for vision extraction on a laptop, the smaller Gemma is the right Gemma.** I'd say that even if accuracy were identical, because reliability matters more than that last point of accuracy in a production pipeline. With accuracy *also* favouring the smaller model on this run, the case is unambiguous.
 

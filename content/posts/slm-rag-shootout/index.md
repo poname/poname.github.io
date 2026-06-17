@@ -1,6 +1,6 @@
 ---
 title: "RAG: When the Chunker Outranks the Model"
-date: 2026-06-18
+date: 2026-06-12
 draft: false
 tags: ["LLM", "SLM", "RAG", "Information Retrieval", "ChromaDB", "Ollama", "Evaluation"]
 categories: ["Technical"]
@@ -34,7 +34,7 @@ The retrieval stack is unsurprising: `all-minilm` for embeddings [[6]](#ref-6) (
 
 A side note on the embedder: I tested `all-minilm` against two more recent alternatives — `nomic-embed-text` (768 dims) and `mxbai-embed-large` (1024 dims). On this corpus and these 20 questions, `all-minilm` matched the hit rate of both larger embedders. At a 384-dim footprint and noticeably faster encoding, it was the right default — bigger embedder ≠ better retrieval, mirroring the bigger-model finding on the LLM side.
 
-The nine LLMs were the same set I've been using across these experiments — `gpt-5.4-mini`/`nano`, `gemini-2.5-flash`/`flash-lite`, plus five local models running on an M4 Max laptop via Ollama (`gemma4` E4B, `gemma4:26b`, `llama3.1:8b`, `gpt-oss:20b`, `qwen3.6:27b`).
+The nine LLMs were the same set I've been using across these experiments — `gpt-5.4-mini`/`nano`, `gemini-2.5-flash`/`flash-lite`, plus five local models running on an Apple Silicon laptop (36 GB unified memory) via Ollama (`gemma4` E4B, `gemma4:26b`, `llama3.1:8b`, `gpt-oss:20b`, `qwen3.6:27b`).
 
 ## The chunking lesson, with a chart
 

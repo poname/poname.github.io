@@ -1,6 +1,6 @@
 ---
 title: "Fine-Tuning: Easy to Train, Hard to Deploy"
-date: 2026-06-20
+date: 2026-06-14
 draft: false
 tags: ["LLM", "SLM", "Fine-Tuning", "LoRA", "Unsloth", "Ollama", "GGUF", "Healthcare"]
 categories: ["Technical"]
