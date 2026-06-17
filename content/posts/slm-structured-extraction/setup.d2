@@ -1,0 +1,74 @@
+direction: down
+
+postings: "30 Job Postings\n9 easy · 9 medium · 12 hard" {
+  shape: cylinder
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+prompt: "Same Extraction Prompt\n12-field JSON schema · temperature 0" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+}
+
+postings -> prompt
+
+models: "9 Models, Apples-to-Apples" {
+  grid-columns: 2
+  grid-gap: 50
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 15
+  style.bold: true
+
+  cloud: "Cloud APIs" {
+    grid-columns: 2
+    grid-gap: 30
+    style.fill: "#eff6ff"
+    style.stroke: "#2563eb"
+    style.font-size: 14
+
+    a: "gemini-2.5-flash" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    b: "gemini-2.5-flash-lite" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    c: "gpt-5.4-mini" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    d: "gpt-5.4-nano" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+  }
+
+  local: "Local on M4 Max · Ollama" {
+    grid-columns: 2
+    grid-gap: 30
+    style.fill: "#faf5ff"
+    style.stroke: "#7c3aed"
+    style.font-size: 14
+
+    e: "gemma4 (E4B)" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    f: "gpt-oss:20b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    g: "gemma4:26b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    h: "llama3.1:8b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    i: "qwen3.6:27b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+  }
+}
+
+prompt -> models
+
+scorer: "Per-Field Scoring\n12 fields · JSON validity · latency" {
+  shape: diamond
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 14
+}
+
+models -> scorer
+
+result: "Top 5 within 1.2pp\n3 cloud · 2 local" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+  style.bold: true
+}
+
+scorer -> result

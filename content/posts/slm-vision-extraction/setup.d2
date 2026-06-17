@@ -1,0 +1,67 @@
+direction: down
+
+receipts: "30 CORD Receipts\nrestaurant thermal prints · mostly Indonesian/Korean" {
+  shape: cylinder
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+prompt: "Same Vision Prompt\nimage + 'extract these 5 fields as JSON'" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+}
+
+receipts -> prompt
+
+models: "4 Multimodal Models" {
+  grid-columns: 2
+  grid-gap: 60
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 15
+  style.bold: true
+
+  cloud: "Cloud APIs" {
+    direction: down
+    style.fill: "#eff6ff"
+    style.stroke: "#2563eb"
+    style.font-size: 14
+
+    a: "gemini-2.5-flash" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    b: "gpt-5.4-mini" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+  }
+
+  local: "Local on M4 Max · Ollama" {
+    direction: down
+    style.fill: "#faf5ff"
+    style.stroke: "#7c3aed"
+    style.font-size: 14
+
+    c: "gemma4 (E4B)" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    d: "gemma4:26b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+  }
+}
+
+prompt -> models
+
+fields: "Per-Field Scoring\nnum_items · first_item · prices · has_tax" {
+  shape: diamond
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 14
+}
+
+models -> fields
+
+result: "Cloud lead: ~3pp\nlocal 8B still hits 90%+" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+  style.bold: true
+}
+
+fields -> result

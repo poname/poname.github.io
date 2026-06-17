@@ -1,0 +1,36 @@
+direction: down
+
+attacks: {
+  label: Attack Types
+  style.font-size: 14
+  grid-rows: 1
+
+  a1: {label: "Base64\nencoded"; style.font-size: 12}
+  a2: {label: "Direct\nEnglish"; style.font-size: 12}
+  a3: {label: "ROT13\nencoded"; style.font-size: 12}
+  a4: {label: "Spanish\ninjection"; style.font-size: 12}
+  a5: {label: "Semantic\nparaphrase"; style.font-size: 12}
+}
+
+regex: {
+  label: "Regex + Base64 (~0ms)"
+  style.font-size: 14
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+
+  catches: {label: "Catches: direct English, base64 encoded"; style.font-size: 12; shape: text}
+  misses: {label: "Misses: ROT13, multilingual, semantic paraphrase"; style.font-size: 12; style.font-color: "#dc2626"; shape: text}
+}
+
+classifier: {
+  label: "Prompt Guard 2 (~5-20ms)"
+  style.font-size: 14
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+
+  catches: {label: "Catches: all of the above"; style.font-size: 12; shape: text}
+  note: {label: "Understands injection intent, not just keywords"; style.font-size: 12; style.font-color: "#16a34a"; shape: text}
+}
+
+attacks -> regex: first layer
+attacks -> classifier: second layer

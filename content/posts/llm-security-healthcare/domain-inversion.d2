@@ -1,0 +1,37 @@
+direction: down
+
+general: {
+  label: "General-Purpose LLM"
+  style.font-size: 15
+
+  grid-rows: 4
+  grid-columns: 2
+
+  kf: {label: "Keyword filters"; style.font-size: 12}
+  kf-r: {label: "Works — users don't say 'ignore'"; style.font-size: 11; style.fill: "#dcfce7"; style.stroke: "#16a34a"}
+  sf: {label: "Safety filters"; style.font-size: 12}
+  sf-r: {label: "Works — blocks harmful content"; style.font-size: 11; style.fill: "#dcfce7"; style.stroke: "#16a34a"}
+  al: {label: "Audit logging"; style.font-size: 12}
+  al-r: {label: "Works — logs aren't sensitive"; style.font-size: 11; style.fill: "#dcfce7"; style.stroke: "#16a34a"}
+  fm: {label: "Failure mode"; style.font-size: 12}
+  fm-r: {label: "Wrong answer — reputational risk"; style.font-size: 11; style.fill: "#dcfce7"; style.stroke: "#16a34a"}
+}
+
+healthcare: {
+  label: "Healthcare LLM"
+  style.font-size: 15
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+
+  grid-rows: 4
+  grid-columns: 2
+
+  kf: {label: "Keyword filters"; style.font-size: 12}
+  kf-r: {label: "Breaks — clinical language triggers"; style.font-size: 11; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  sf: {label: "Safety filters"; style.font-size: 12}
+  sf-r: {label: "Breaks — must discuss symptoms"; style.font-size: 11; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  al: {label: "Audit logging"; style.font-size: 12}
+  al-r: {label: "Breaks — logs contain PHI"; style.font-size: 11; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  fm: {label: "Failure mode"; style.font-size: 12}
+  fm-r: {label: "Wrong clinical decision"; style.font-size: 11; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+}

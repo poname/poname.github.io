@@ -1,0 +1,65 @@
+direction: down
+
+user: "User Task\n'fix the factorial bug, run the tests'" {
+  shape: parallelogram
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+}
+
+agent: "LangGraph Agent\nplan → call tool → read result → decide" {
+  shape: rectangle
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+  style.bold: true
+}
+
+user -> agent
+
+llm: "Gemma 4 (via Ollama)\ntemperature 0 · streaming" {
+  shape: rectangle
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+  style.font-size: 13
+}
+
+agent <-> llm: "messages · tool calls"
+
+tools: "Tool Box" {
+  grid-columns: 3
+  grid-gap: 24
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 14
+  style.bold: true
+
+  a: "read_file" {style.fill: "#dcfce7"; style.stroke: "#16a34a"; style.font-size: 12}
+  b: "list_files" {style.fill: "#dcfce7"; style.stroke: "#16a34a"; style.font-size: 12}
+  c: "search_code" {style.fill: "#dcfce7"; style.stroke: "#16a34a"; style.font-size: 12}
+  d: "edit_file" {style.fill: "#fef3c7"; style.stroke: "#d97706"; style.font-size: 12}
+  e: "write_file" {style.fill: "#fef3c7"; style.stroke: "#d97706"; style.font-size: 12}
+  f: "run_command" {style.fill: "#fee2e2"; style.stroke: "#dc2626"; style.font-size: 12}
+}
+
+agent -> tools: "execute"
+tools -> agent: "stdout / file content"
+
+workdir: "Sandbox Workdir\nsample_project/ · pytest runner" {
+  shape: cylinder
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 13
+}
+
+tools <-> workdir: "reads · writes · runs"
+
+result: "Final Answer + Verification\nbug fixed? tests passing?" {
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 14
+  style.bold: true
+}
+
+agent -> result

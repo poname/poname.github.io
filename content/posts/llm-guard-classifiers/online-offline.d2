@@ -1,0 +1,47 @@
+direction: down
+
+user: {
+  label: User Message
+  style.font-size: 14
+}
+
+online: {
+  label: "Online Path (Hot Path)"
+  style.font-size: 14
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  direction: right
+
+  model: {label: "Prompt Guard 2 22M"; style.font-size: 13; style.bold: true}
+  details: {label: "~5ms latency, English-focused"; style.font-size: 12; shape: text}
+}
+
+audit: {
+  label: Audit Trail
+  style.font-size: 14
+}
+
+offline: {
+  label: "Offline Path (Batch)"
+  style.font-size: 14
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+  direction: right
+
+  model: {label: "Prompt Guard 2 86M"; style.font-size: 13; style.bold: true}
+  details: {label: "8 languages, catches what 22M missed"; style.font-size: 12; shape: text}
+}
+
+output: {
+  label: Same Finding Format
+  style.font-size: 14
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.bold: true
+}
+
+user -> online: real-time
+user -> audit: captured
+audit -> offline: batch
+online -> output
+offline -> output

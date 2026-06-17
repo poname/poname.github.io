@@ -1,0 +1,34 @@
+direction: down
+
+audit: {
+  label: Audit Finalization
+  style.font-size: 15
+  style.bold: true
+}
+
+tier1: {
+  label: "Tier 1: Structured Logs"
+  style.font-size: 14
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  direction: down
+
+  what: {label: "model_name, latency_ms, token_count\noutcome, error_type"; style.font-size: 12}
+  who: {label: "Access: all engineers\nUse: dashboards, alerting"; style.font-size: 12}
+  safe: {label: "No sensitive data"; style.font-size: 13; style.bold: true; style.fill: "#dcfce7"; style.stroke: "#16a34a"}
+}
+
+tier2: {
+  label: "Tier 2: Compliant Store"
+  style.font-size: 14
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+  direction: down
+
+  what: {label: "Full prompts, responses, user refs\nsession IDs, error messages, tool calls"; style.font-size: 12}
+  who: {label: "Access: role-based, audited\nUse: compliance, debugging, eval"; style.font-size: 12}
+  sensitive: {label: "Contains PII / PHI"; style.font-size: 13; style.bold: true; style.fill: "#fee2e2"; style.stroke: "#dc2626"}
+}
+
+audit -> tier1: metadata only
+audit -> tier2: full content

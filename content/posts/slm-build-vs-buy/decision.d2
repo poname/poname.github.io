@@ -1,0 +1,80 @@
+direction: down
+
+start: "Do I have a narrow, well-defined task\nI'm running on cloud LLMs today?" {
+  shape: diamond
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+  style.bold: true
+}
+
+volume_q: "What's the monthly request volume?" {
+  shape: diamond
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+start -> volume_q: "yes"
+start -> stay_cloud: "no / many tasks"
+
+low: "Under a few million\nrequests/month" {
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 13
+}
+
+mid: "Few to tens of millions\non one stable task" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 13
+}
+
+high: "Portfolio of 5-20 mid-volume tasks\nor one very-high-volume task" {
+  shape: rectangle
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+  style.font-size: 13
+}
+
+volume_q -> low: "low"
+volume_q -> mid: "mid"
+volume_q -> high: "high / portfolio"
+
+cheap_api: "Cheap cloud tier\nGemini Flash Lite · GPT nano\nlow per-request · zero ops" {
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 13
+  style.bold: true
+}
+
+self_host: "Self-host fine-tuned 4B\non one A100 via vLLM\nflat monthly · 183 rps measured" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 13
+  style.bold: true
+}
+
+multi_lora: "Multi-LoRA self-host\n1 base model · 10-50 task adapters\nshared GPU · per-task cost approaches zero" {
+  shape: rectangle
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+  style.font-size: 13
+  style.bold: true
+}
+
+stay_cloud: "Cloud API is the right answer\nDon't self-host." {
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 13
+  style.bold: true
+}
+
+low -> cheap_api
+mid -> self_host
+high -> multi_lora

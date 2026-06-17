@@ -1,0 +1,33 @@
+direction: right
+
+opted: {
+  label: Opted-in Model
+  style.font-size: 15
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+
+  query: {label: query(); style.font-size: 13}
+  ctx: {label: "GuardContext ✓"; style.font-size: 13; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+  run: {label: run_model(); style.font-size: 13}
+  active: {label: "Callbacks scan"; style.font-size: 13; style.bold: true; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+
+  query -> ctx: sets
+  ctx -> run: wraps
+  run -> active: invoke()
+}
+
+not-opted: {
+  label: Non-opted Model
+  style.font-size: 15
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+
+  query: {label: query(); style.font-size: 13}
+  no-ctx: {label: "No context"; style.font-size: 13; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  run: {label: run_model(); style.font-size: 13}
+  skip: {label: "Callbacks skip"; style.font-size: 13; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+
+  query -> no-ctx: none
+  no-ctx -> run: direct
+  run -> skip: invoke()
+}

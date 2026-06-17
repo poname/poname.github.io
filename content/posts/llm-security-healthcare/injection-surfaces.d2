@@ -1,0 +1,34 @@
+direction: down
+
+direct: {
+  label: "Direct Injection"
+  style.font-size: 14
+
+  user: {label: "User types malicious input"; style.font-size: 12}
+  example: {label: '"Ignore all previous instructions"'; style.font-size: 12; style.fill: "#fee2e2"; style.stroke: "#dc2626"}
+}
+
+indirect: {
+  label: "Indirect Injection (larger surface)"
+  style.font-size: 14
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+
+  grid-rows: 1
+  s1: {label: "Clinical\nnotes"; style.font-size: 12}
+  s2: {label: "Intake\nforms"; style.font-size: 12}
+  s3: {label: "Referral\nletters"; style.font-size: 12}
+  s4: {label: "Lab\nresults"; style.font-size: 12}
+  s5: {label: "Medication\ncomments"; style.font-size: 12}
+}
+
+prompt: {
+  label: "LLM Prompt"
+  style.font-size: 15
+  style.bold: true
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+}
+
+direct -> prompt: user input
+indirect -> prompt: retrieved context (FHIR)

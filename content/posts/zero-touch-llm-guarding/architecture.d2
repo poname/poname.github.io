@@ -1,0 +1,33 @@
+direction: down
+
+agent: {
+  label: Your Agent
+  style.font-size: 16
+}
+
+factory: {
+  label: create_model()
+  style.font-size: 16
+  style.bold: true
+}
+
+callbacks: {
+  label: Injected Callbacks
+  style.font-size: 14
+  grid-rows: 1
+
+  input: {label: InputGuard; style.font-size: 14}
+  audit: {label: AuditHook; style.font-size: 14}
+  output: {label: OutputGuard; style.font-size: 14}
+}
+
+llm: {
+  label: LLM API
+  style.font-size: 16
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+}
+
+agent -> factory: calls
+factory -> callbacks: injects {style.bold: true}
+callbacks -> llm: model.invoke()

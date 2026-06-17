@@ -1,0 +1,100 @@
+direction: down
+
+source: "FIFA World Cup 2026\nWikipedia + tournament docs" {
+  shape: cylinder
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+chunker: "Markdown-aware Chunker\nsection headers prepended to each chunk" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+  style.bold: true
+}
+
+source -> chunker
+
+embedder: "all-minilm Embedder\n384-dim, runs locally via Ollama" {
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 14
+}
+
+chunker -> embedder
+
+chroma: "ChromaDB (persistent)\n28 enriched chunks" {
+  shape: stored_data
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 14
+}
+
+embedder -> chroma
+
+query: "Eval Question\n(20-question set)" {
+  shape: parallelogram
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+}
+
+retrieve: "Top-5 Retrieval" {
+  shape: diamond
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+chroma -> retrieve
+query -> retrieve
+
+models: "9 Models" {
+  grid-columns: 2
+  grid-gap: 50
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 15
+  style.bold: true
+
+  cloud: "Cloud APIs" {
+    grid-columns: 2
+    grid-gap: 30
+    style.fill: "#eff6ff"
+    style.stroke: "#2563eb"
+    style.font-size: 14
+
+    a: "gpt-5.4-mini" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    b: "gpt-5.4-nano" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    c: "gemini-2.5-flash" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+    d: "gemini-flash-lite" {style.fill: "#dbeafe"; style.stroke: "#2563eb"; style.font-size: 12}
+  }
+
+  local: "Local · Ollama" {
+    grid-columns: 2
+    grid-gap: 30
+    style.fill: "#faf5ff"
+    style.stroke: "#7c3aed"
+    style.font-size: 14
+
+    e: "gemma4 (E4B)" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    f: "gemma4:26b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    g: "llama3.1:8b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    h: "gpt-oss:20b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+    i: "qwen3.6:27b" {style.fill: "#f3e8ff"; style.stroke: "#7c3aed"; style.font-size: 12}
+  }
+}
+
+retrieve -> models: "context + question"
+
+scorer: "Keyword-coverage scoring\nagainst hand-labelled answers" {
+  shape: diamond
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.font-size: 14
+}
+
+models -> scorer

@@ -1,0 +1,35 @@
+direction: right
+
+without: {
+  label: Per-call Logging
+  style.font-size: 15
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+
+  log1: {label: "Flash (1.2k tok)"; style.font-size: 12}
+  log2: {label: "Flash (1.4k tok)"; style.font-size: 12}
+  log3: {label: "Pro (2.1k tok)"; style.font-size: 12}
+  log4: {label: "Pro (1.8k tok)"; style.font-size: 12}
+  problem: {label: "4 unrelated entries"; style.font-size: 13; style.bold: true; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+
+  log1 -> log2: "?" {style.stroke: "#ccc"}
+  log2 -> log3: "?" {style.stroke: "#ccc"}
+  log3 -> log4: "?" {style.stroke: "#ccc"}
+}
+
+with: {
+  label: "With audit_scope()"
+  style.font-size: 15
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+
+  input: {label: "input: user request"; style.font-size: 12}
+  s1: {label: "seq 1: Flash — doc A"; style.font-size: 12}
+  s2: {label: "seq 2: Flash — doc B"; style.font-size: 12}
+  s3: {label: "seq 3: Pro — ground"; style.font-size: 12}
+  s4: {label: "seq 4: Pro — respond"; style.font-size: 12}
+  output: {label: "output: final response"; style.font-size: 12}
+  result: {label: "1 record, full chain"; style.font-size: 13; style.bold: true; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+
+  input -> s1 -> s2 -> s3 -> s4 -> output
+}

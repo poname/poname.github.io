@@ -1,0 +1,45 @@
+direction: down
+
+input: {
+  label: User Input
+  style.font-size: 14
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+}
+
+runtime: {
+  label: "Runtime Guards (per LLM call)"
+  style.font-size: 14
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  grid-rows: 2
+  grid-columns: 3
+
+  r1: {label: "Regex patterns\n(~0ms)"; style.font-size: 12}
+  r2: {label: "Base64 decode\n(~0ms)"; style.font-size: 12}
+  r3: {label: "Structural isolation\n(~0ms)"; style.font-size: 12}
+  r4: {label: "Prompt hardening\n(~0ms)"; style.font-size: 12}
+  r5: {label: "ML classifier\n(~5ms)"; style.font-size: 12; style.fill: "#f3e8ff"; style.stroke: "#7c3aed"}
+  r6: {label: "Output scanning\n(~0ms)"; style.font-size: 12}
+}
+
+llm: {
+  label: LLM
+  style.font-size: 16
+  style.bold: true
+}
+
+offline: {
+  label: "Offline Analysis"
+  style.font-size: 14
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+  grid-rows: 1
+
+  o1: {label: "ML classifier 86M\n(batch)"; style.font-size: 12}
+  o2: {label: "PromptFoo / Garak\n(pre-deploy)"; style.font-size: 12}
+}
+
+input -> runtime
+runtime -> llm
+llm -> offline: audit trail

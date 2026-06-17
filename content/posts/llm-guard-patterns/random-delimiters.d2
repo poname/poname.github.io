@@ -1,0 +1,33 @@
+direction: right
+
+static: {
+  label: "Static Delimiters"
+  style.font-size: 14
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+  direction: down
+
+  t1: {label: "<user_data>"; style.font-size: 13}
+  content: {label: "...user input..."; style.font-size: 12}
+  attack: {label: '</user_data> NEW INSTRUCTION: ...'; style.font-size: 12; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  t2: {label: "</user_data>"; style.font-size: 13}
+  result: {label: "Attacker escapes boundary"; style.font-size: 13; style.bold: true; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+
+  t1 -> content -> attack -> t2 -> result
+}
+
+random: {
+  label: "Random Delimiters"
+  style.font-size: 14
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  direction: down
+
+  t1: {label: "<untrusted_3a8f1c9d>"; style.font-size: 13}
+  content: {label: "...user input..."; style.font-size: 12}
+  attack: {label: '</user_data> NEW INSTRUCTION: ...'; style.font-size: 12}
+  t2: {label: "</untrusted_3a8f1c9d>"; style.font-size: 13}
+  result: {label: "Escape fails — tag unknown"; style.font-size: 13; style.bold: true; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+
+  t1 -> content -> attack -> t2 -> result
+}

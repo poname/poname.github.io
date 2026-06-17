@@ -1,0 +1,34 @@
+direction: down
+
+framework: {
+  label: "Framework (Base Class)"
+  style.font-size: 15
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+
+  execute: {label: "execute() — template method"; style.font-size: 14; style.bold: true}
+  setup: {label: "1. setup (logging, metrics, validation)"; style.font-size: 12}
+  hook: {
+    label: "2. do_work() — abstract"
+    style.font-size: 13
+    style.italic: true
+    style.fill: "#dcfce7"
+    style.stroke: "#16a34a"
+  }
+  teardown: {label: "3. teardown (results, errors, cleanup)"; style.font-size: 12}
+
+  execute -> setup
+  setup -> hook
+  hook -> teardown
+}
+
+your-code: {
+  label: "Your Code (Subclass)"
+  style.font-size: 15
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+
+  impl: {label: "do_work() — your business logic"; style.font-size: 13; style.bold: true}
+}
+
+framework.hook -> your-code.impl: "you implement this" {style.stroke: "#16a34a"}

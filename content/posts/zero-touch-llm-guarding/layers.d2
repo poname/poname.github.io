@@ -1,0 +1,47 @@
+direction: down
+
+user: {
+  label: User Message
+  style.font-size: 14
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+}
+
+before: {
+  label: "Before LLM (on_chat_model_start)"
+  style.font-size: 13
+  grid-rows: 1
+
+  l1: {label: "Input Scanning\nregex + base64"; style.font-size: 12}
+  l2: {label: "Prompt Hardening\nauto-appended protocol"; style.font-size: 12}
+  l3: {label: "Structural Isolation\nrandom XML tags"; style.font-size: 12}
+}
+
+llm: {
+  label: LLM
+  style.font-size: 16
+  style.bold: true
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+}
+
+after: {
+  label: "After LLM (on_llm_end)"
+  style.font-size: 13
+  grid-rows: 1
+
+  l4: {label: "Output Scanning\ncredentials, XSS, prompt leakage"; style.font-size: 12}
+  l5: {label: "Recording\nmetadata to logs, detail to audit"; style.font-size: 12; style.fill: "#dcfce7"; style.stroke: "#16a34a"}
+}
+
+response: {
+  label: Response
+  style.font-size: 14
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+}
+
+user -> before
+before -> llm
+llm -> after
+after -> response

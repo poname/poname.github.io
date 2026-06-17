@@ -1,0 +1,75 @@
+direction: right
+
+title: {
+  label: Single Index vs Dual Index Retrieval
+  near: top-center
+  shape: text
+  style.font-size: 20
+  style.bold: true
+}
+
+single: Single Index {
+  style.fill: "#fff7ed"
+  style.stroke: "#c2410c"
+
+  scalar: "Scalar Query\n\"critical reception?\"" {
+    style.fill: "#fed7aa"
+    shape: parallelogram
+  }
+  chunks_s: "1,500 char chunks" {
+    style.fill: "#ffedd5"
+  }
+  result_s: "Full review paragraph intact\ntop-K=10 is enough" {
+    style.fill: "#dcfce7"
+    style.stroke: "#16a34a"
+    style.font-size: 13
+  }
+  scalar -> chunks_s -> result_s
+
+  list: "List Query\n\"filming locations?\"" {
+    style.fill: "#fed7aa"
+    shape: parallelogram
+  }
+  chunks_l: "1,500 char chunks" {
+    style.fill: "#ffedd5"
+  }
+  result_l: "3-4 locations bundled per chunk\ntop-K=10, dedup → ~12 unique\nmany locations missed" {
+    style.fill: "#fecaca"
+    style.stroke: "#dc2626"
+    style.font-size: 13
+  }
+  list -> chunks_l -> result_l
+}
+
+dual: Dual Index {
+  style.fill: "#eff6ff"
+  style.stroke: "#1d4ed8"
+
+  scalar2: "Scalar Query\n\"critical reception?\"" {
+    style.fill: "#bfdbfe"
+    shape: parallelogram
+  }
+  large: "Large-chunk index\n2,000 chars" {
+    style.fill: "#dbeafe"
+  }
+  result_s2: "Full review paragraph intact\ntop-K=8, deep context" {
+    style.fill: "#dcfce7"
+    style.stroke: "#16a34a"
+    style.font-size: 13
+  }
+  scalar2 -> large -> result_s2
+
+  list2: "List Query\n\"filming locations?\"" {
+    style.fill: "#bfdbfe"
+    shape: parallelogram
+  }
+  small: "Small-chunk index\n500 chars" {
+    style.fill: "#dbeafe"
+  }
+  result_l2: "1-2 locations per chunk\ntop-K=30 → 20+ unique locations\nbroad coverage" {
+    style.fill: "#dcfce7"
+    style.stroke: "#16a34a"
+    style.font-size: 13
+  }
+  list2 -> small -> result_l2
+}

@@ -1,0 +1,40 @@
+direction: down
+
+l1: {
+  label: "Layer 1: Model Factory"
+  style.font-size: 15
+
+  grid-rows: 1
+  factory: {label: "create_model()"; style.font-size: 13; style.bold: true}
+  arrow: {label: "injects →"; shape: text; style.font-size: 12}
+  hook: {label: AuditHook; style.font-size: 13}
+}
+
+l2: {
+  label: "Layer 2: Audit Scope"
+  style.font-size: 15
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+
+  grid-rows: 1
+  scope: {label: "audit_scope()"; style.font-size: 13; style.bold: true}
+  arrow: {label: "activates →"; shape: text; style.font-size: 12}
+  ctx: {label: "AuditScope (contextvars)\nCollects invocations, nodes, tools"; style.font-size: 12}
+}
+
+l3: {
+  label: "Layer 3: Base Class"
+  style.font-size: 15
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+
+  grid-rows: 1
+  query: {label: "query() [framework]"; style.font-size: 13; style.bold: true}
+  arrow: {label: "wraps →"; shape: text; style.font-size: 12}
+  run: {label: "run_model() [you]"; style.font-size: 13; style.italic: true; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+  arrow2: {label: "→ then"; shape: text; style.font-size: 12}
+  finalize: {label: "persist audit"; style.font-size: 13}
+}
+
+l1 -> l2: "Hook checks for active scope"
+l2 -> l3: "Base class activates scope"

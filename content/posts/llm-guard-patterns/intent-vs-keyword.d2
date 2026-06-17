@@ -1,0 +1,35 @@
+direction: right
+
+keyword: {
+  label: "Keyword Filter"
+  style.font-size: 15
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+  direction: down
+
+  rule: {label: 'Contains "ignore" + "previous"?'; style.font-size: 13}
+  r1: {label: '"ignore previous instructions" → BLOCKED'; style.font-size: 12; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  r2: {label: '"ignore previous medications" → BLOCKED'; style.font-size: 12; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  result: {label: "False positive!"; style.font-size: 14; style.bold: true; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+
+  rule -> r1
+  rule -> r2
+  r2 -> result
+}
+
+intent: {
+  label: "Intent Pattern"
+  style.font-size: 15
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  direction: down
+
+  rule: {label: '"ignore" + "previous" + LLM target?'; style.font-size: 13}
+  r1: {label: '"ignore previous instructions" → BLOCKED'; style.font-size: 12; style.fill: "#fecaca"; style.stroke: "#dc2626"}
+  r2: {label: '"ignore previous medications" → ALLOWED'; style.font-size: 12; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+  result: {label: "Correct!"; style.font-size: 14; style.bold: true; style.fill: "#bbf7d0"; style.stroke: "#16a34a"}
+
+  rule -> r1
+  rule -> r2
+  r2 -> result
+}

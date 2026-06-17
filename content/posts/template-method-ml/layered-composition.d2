@@ -1,0 +1,41 @@
+direction: down
+
+l1: {
+  label: "GuardedAgent.query()"
+  style.font-size: 14
+  style.fill: "#f3e8ff"
+  style.stroke: "#7c3aed"
+
+  ctx: {label: "security_context"; style.font-size: 12}
+}
+
+l2: {
+  label: "AuditedAgent.query()"
+  style.font-size: 14
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+
+  ctx: {label: "audit_context"; style.font-size: 12}
+}
+
+l3: {
+  label: "run_model() — your code"
+  style.font-size: 14
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.bold: true
+
+  code: {label: "model.invoke(), agent logic, tools"; style.font-size: 12}
+}
+
+change: {
+  label: "One line changed: class MyAgent(GuardedAgent)"
+  style.font-size: 13
+  style.bold: true
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  shape: text
+}
+
+l1 -> l2: calls super()
+l2 -> l3: calls run_model()

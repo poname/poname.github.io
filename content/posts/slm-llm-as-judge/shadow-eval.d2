@@ -1,0 +1,71 @@
+direction: down
+
+postings: "10 Job Postings\nsame set used in the extraction shootout" {
+  shape: cylinder
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+models: "Two Extraction Models" {
+  grid-columns: 2
+  grid-gap: 50
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 14
+  style.bold: true
+
+  a: "Model A · GPT-5.4-mini\ncloud API · paid" {
+    style.fill: "#dbeafe"
+    style.stroke: "#2563eb"
+    style.font-size: 13
+  }
+  b: "Model B · Gemma 4 E4B\nlocal via Ollama · free" {
+    style.fill: "#f3e8ff"
+    style.stroke: "#7c3aed"
+    style.font-size: 13
+  }
+}
+
+postings -> models
+
+harness: "Shadow Eval Harness\nblind pairs · A/B positions randomised" {
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.font-size: 14
+  style.bold: true
+}
+
+models -> harness
+
+judges: "Two Independent Judges" {
+  grid-columns: 2
+  grid-gap: 50
+  style.fill: "#f8fafc"
+  style.stroke: "#475569"
+  style.font-size: 14
+  style.bold: true
+
+  g: "Judge 1 · Gemini 2.5 Flash\n(same provider as Gemma)" {
+    style.fill: "#fee2e2"
+    style.stroke: "#dc2626"
+    style.font-size: 13
+  }
+  c: "Judge 2 · Claude Sonnet 4-6\n(neutral · third party)" {
+    style.fill: "#dcfce7"
+    style.stroke: "#16a34a"
+    style.font-size: 13
+  }
+}
+
+harness -> judges
+
+verdicts: "Per-Posting Verdicts\nwinner · score A · score B · agreement" {
+  shape: diamond
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.font-size: 14
+}
+
+judges -> verdicts
