@@ -8,7 +8,7 @@ markup:
       unsafe: true
 
 params:
-  defaultTheme: dark
+  defaultTheme: light
   ShowReadingTime: true
   ShowPoweredBy: false
 
